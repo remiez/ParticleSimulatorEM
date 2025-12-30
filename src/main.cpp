@@ -1,13 +1,25 @@
 #include <iostream>
 #include "Vec3.hpp"
+#include "Particle.hpp"
 int main() {
-    Vec3 wzero;
-    Vec3 v1(1,2,3);
-    Vec3 v2(4,5,6);
+    Vec3 pos(0,0,0);
+    Vec3 vel(1,0,0);
+    Particle p0;
+    Particle p1(pos, vel, 1, 1);
     
-    Vec3 norm = v1.normalize();
+    (p1.getPosition()).Wypisz();
+    (p1.getVelocity()).Wypisz();
+    std::cout<<p1.getMass()<<"\n";
+    std::cout<<p1.getCharge()<<"\n";
+    std::cout<<p1.getKineticEnergy()<<"\n";
+    std::cout<<"\n";
 
-    norm.Wypisz();
+    p1.setPosition(Vec3(1,1,1));
+    p1.setVelocity(Vec3(2,0,0));
+
+    p1.getPosition().Wypisz();
+    p1.getVelocity().Wypisz();
+    std::cout<<p1.getKineticEnergy()<<"\n";
 
     std::cout << "Symulator czastek EM\n";
     return 0;
