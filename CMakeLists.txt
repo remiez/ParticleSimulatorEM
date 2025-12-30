@@ -14,6 +14,8 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(SOURCES
     src/main.cpp
+    src/Vec3.cpp
+    src/Particle.cpp
 )
 
 add_executable(symulator ${SOURCES})

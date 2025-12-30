@@ -10,10 +10,6 @@ Vec3::Vec3(double xx, double yy, double zz)
     :x(xx), y(yy), z(zz)        //Zaprogramowanie konstruktora głównego
 {}
 
-Vec3::Vec3(const Vec3& other)
-    :x(other.x), y(other.y), z(other.z)
-{}
-
 //Matematyka wektorów konkretnie to programowanie jak ma ona działać
 
 Vec3 Vec3::operator+(const Vec3& other){
@@ -50,9 +46,18 @@ bool Vec3::operator==(const Vec3& other){
     }
 }
 
-Vec3 Vec3::normalize(){
-    return Vec3(x/sqrt(x*x+y*y+z*z), y/sqrt(x*x+y*y+z*z), z/sqrt(x*x+y*y+z*z));
+double Vec3::length2(){
+    return x*x+y*y+z*z;
 }
+
+double Vec3::length(){
+    return sqrt(x*x+y*y+z*z);
+}
+
+Vec3 Vec3::normalize(){
+    return Vec3(x/length(), y/length(), z/length());
+}
+
 double Vec3::DotProduct(const Vec3& wektor1, const Vec3& wektor2){
     return wektor1.x*wektor2.x+wektor1.y*wektor2.y+wektor1.z*wektor2.z;
 }
@@ -61,7 +66,7 @@ Vec3 Vec3::CrossProduct(const Vec3& wektor1, const Vec3& wektor2){
     return Vec3(wektor1.y*wektor2.z-wektor1.z*wektor2.y, wektor1.z*wektor2.x-wektor1.x*wektor2.z, wektor1.x*wektor2.y-wektor1.y*wektor2.x);
 }
 
-void Vec3::Wypisz(){
+void Vec3::Wypisz() const{
     std::cout<<"współrzędna x to:"<<x<<"\n";
     std::cout<<"współrzędna y to:"<<y<<"\n";
     std::cout<<"współrzędna z to:"<<z<<"\n";
