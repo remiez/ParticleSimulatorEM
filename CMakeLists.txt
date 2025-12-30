@@ -16,6 +16,7 @@ set(SOURCES
     src/main.cpp
     src/Vec3.cpp
     src/Particle.cpp
+    src/UniformField.cpp
 )
 
 add_executable(symulator ${SOURCES})
