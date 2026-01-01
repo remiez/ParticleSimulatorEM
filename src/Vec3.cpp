@@ -10,6 +10,18 @@ Vec3::Vec3(double xx, double yy, double zz)
     :x(xx), y(yy), z(zz)        //Zaprogramowanie konstruktora głównego
 {}
 
+double Vec3::getX() const{
+    return x;
+}
+
+double Vec3::getY() const{
+    return y;
+}
+
+double Vec3::getZ() const{
+    return z;
+}
+
 //Matematyka wektorów konkretnie to programowanie jak ma ona działać
 
 Vec3 Vec3::operator+(const Vec3& other){
@@ -58,12 +70,12 @@ Vec3 Vec3::normalize(){
     return Vec3(x/length(), y/length(), z/length());
 }
 
-double Vec3::DotProduct(const Vec3& wektor1, const Vec3& wektor2){
-    return wektor1.x*wektor2.x+wektor1.y*wektor2.y+wektor1.z*wektor2.z;
+double Vec3::DotProduct(const Vec3& other){
+    return x*other.x+y*other.y+z*other.z;
 }
 
-Vec3 Vec3::CrossProduct(const Vec3& wektor1, const Vec3& wektor2){
-    return Vec3(wektor1.y*wektor2.z-wektor1.z*wektor2.y, wektor1.z*wektor2.x-wektor1.x*wektor2.z, wektor1.x*wektor2.y-wektor1.y*wektor2.x);
+Vec3 Vec3::CrossProduct(const Vec3& other){
+    return Vec3(y*other.z-z*other.y, z*other.x-x*other.z, x*other.y-y*other.x);
 }
 
 void Vec3::Wypisz() const{

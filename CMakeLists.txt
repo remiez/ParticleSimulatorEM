@@ -17,6 +17,7 @@ set(SOURCES
     src/Vec3.cpp
     src/Particle.cpp
     src/UniformField.cpp
+    src/EulerIntegrator.cpp
 )
 
 add_executable(symulator ${SOURCES})
