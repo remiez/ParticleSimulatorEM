@@ -18,6 +18,7 @@ set(SOURCES
     src/Particle.cpp
     src/UniformField.cpp
     src/EulerIntegrator.cpp
+    src/Simulation.cpp
 )
 
 add_executable(symulator ${SOURCES})
