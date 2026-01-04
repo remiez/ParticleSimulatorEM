@@ -8,16 +8,15 @@
 #include "EulerIntegrator.hpp"
 #include "UniformField.hpp"
 #include "Simulation.hpp"
+#include "CSVWriter.hpp"
 int main(){
     auto field = std::make_shared<UniformField>(Vec3(0,0,0), Vec3(0,0,1));
     auto integrator = std::make_shared<EulerIntegrator>();
-    Simulation sim(integrator, field, 0.001);
+    auto writer = std::make_unique<CSVWriter>("data/output.csv");
+    Simulation sim(std::move(writer), integrator, field, 0.001);
     sim.addParticle(Particle(Vec3(1,0,0), Vec3(0,1,0), 1, 1));
-
     sim.run(1000);
 
-    const auto& p = sim.getParticles()[0];
-    p.getPosition().Wypisz();
     std::cout << "Symulator czastek EM\n";
     return 0;
 }
