@@ -9,6 +9,8 @@
 #include "UniformField.hpp"
 #include "Simulation.hpp"
 #include "CSVWriter.hpp"
+#include "RK4Integrator.hpp"
+
 int main(){
     auto field = std::make_shared<UniformField>(Vec3(0,0,0), Vec3(0,0,1));
     auto integrator = std::make_shared<EulerIntegrator>();

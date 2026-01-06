@@ -20,6 +20,7 @@ set(SOURCES
     src/EulerIntegrator.cpp
     src/Simulation.cpp
     src/CSVWriter.cpp
+    src/RK4Integrator.cpp
 )
 
 add_executable(symulator ${SOURCES})

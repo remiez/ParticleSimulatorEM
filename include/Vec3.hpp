@@ -21,7 +21,7 @@ class Vec3{
     double length2();
     Vec3 normalize();
     double DotProduct(const Vec3& other);
-    Vec3 CrossProduct(const Vec3& other);
+    Vec3 CrossProduct(const Vec3& other) const;
     void Wypisz() const;
 
 };
