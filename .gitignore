@@ -63,3 +63,4 @@ Makefile
 *.log
 *.tmp
 .DS_Store
+data/*.csv

@@ -5,7 +5,7 @@
 CSVWriter::CSVWriter(const std::string& filename)
     :file(filename)
 {
-    if(!file.is_open()) throw std::runtime_error("Cannot open file: " + filename);
+    if(!file.is_open()) throw std::runtime_error("nie mozna otworzyc pliku" + filename);
     WriteHead();
 }
 

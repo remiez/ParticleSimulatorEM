@@ -21,6 +21,7 @@ set(SOURCES
     src/Simulation.cpp
     src/CSVWriter.cpp
     src/RK4Integrator.cpp
+    src/Config.cpp
 )
 
 add_executable(symulator ${SOURCES})
