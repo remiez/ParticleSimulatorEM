@@ -14,9 +14,39 @@
 #include "CSVWriter.hpp"
 #include "RK4Integrator.hpp"
 #include "Config.hpp"
+void printHelp() {
+    std::cout <<
+R"(Symulator cząstek naładowanych w polu elektromagnetycznym
 
-int main(){
-    Config config("config.txt");
+Użycie:
+  ./symulator <plik_konfiguracyjny>
+
+Opis:
+  Program symuluje ruch wielu cząstek naładowanych w 3D
+  w zewnętrznym polu elektromagnetycznym zgodnie z
+  klasycznym równaniem siły Lorentza.
+
+Opcje:
+  --help        Wyświetla tę pomoc
+)";
+}
+
+int main(int argc, char* argv[]){
+    std::string configPath;
+    if(argc!=2){
+        std::cerr<<"Błąd: podano złą liczbe argumentów zostanie użyty plik konfigurujący config.txt\n";
+        std::cout<<"jak nie wiadomo jak uruchomić wpisz --help\n";
+        configPath = "config.txt";
+    }
+    else if(std::string(argv[1]) == "--help"){
+        printHelp();
+        return 0;
+    }
+    else{
+        configPath = argv[1];
+    }
+    try{
+    Config config(configPath);
     auto field = std::make_shared<UniformField>(config.getE(), config.getB());
     std::shared_ptr<Integrator> integrator;
     if(config.getIntegrator() == "EulerIntegrator"){
@@ -35,7 +65,11 @@ int main(){
         sim.addParticle(p);
     }
     sim.run(config.getSteps());
-
+    }
+    catch(const std::exception& e){
+        std::cerr<<"Błąd: "<<e.what()<<"\n";
+        return 1;
+    }
     std::cout << "Symulator czastek EM\n";
     return 0;
 }
