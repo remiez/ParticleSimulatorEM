@@ -5,10 +5,11 @@
 class Config{
     private:
     std::vector<Particle> particles;
-    int N;
-    double dt;
-    int steps;
+    int N=0;
+    double dt=0;
+    int steps=0;
     std::string integrator;
+    std::string field;
     Vec3 E;
     Vec3 B;
     std::vector<Vec3> x;
@@ -23,7 +24,8 @@ class Config{
 
     double getDt() const;
     int getSteps() const;
-    std::string getIntegrator() const;
+    std::shared_ptr<Field> getField() const;
+    std::unique_ptr<Integrator> getIntegrator() const;
     Vec3 getE() const;
     Vec3 getB() const;
     const std::vector<Particle>& getParticles() const;

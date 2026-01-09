@@ -3,6 +3,12 @@
 #include <string>
 #include <cctype>
 #include <vector>
+#include <memory>
+#include "Field.hpp"
+#include "Integrator.hpp"
+#include "EulerIntegrator.hpp"
+#include "RK4Integrator.hpp"
+#include "UniformField.hpp"
 #include "Config.hpp"
 #include "Vec3.hpp"
 Config::Config(const std::string& filename){
@@ -16,10 +22,11 @@ Config::Config(const std::string& filename){
         if(pos == std::string::npos) continue;
         std::string key = trim(line.substr(0,pos));
         std::string value = trim(line.substr(pos+1));
-
+        
         if(key == "dt") dt = std::stod(value);
         else if(key == "steps") steps = std::stoi(value);
         else if(key == "integrator") integrator = value;
+        else if(key == "field") field = value;
         else if(key == "E") E = parseVec3(value);
         else if(key == "B") B = parseVec3(value);
         else if(key == "particles"){
@@ -37,11 +44,26 @@ Config::Config(const std::string& filename){
             else if(key == "particle" + std::to_string(i) + ".m") m[i] = std::stod(value);
         }
     }
+    if(dt <= 0){
+        throw std::runtime_error("dt musi być większe niż 0");
+    }
+    if(steps <= 0){
+        throw std::runtime_error("kroków symulacji musi być więcej niż 0");
+    }
+    if(N <= 0){
+        throw std::runtime_error("Ilość cząstek musi być większa niż 0");
+    }
+    for(int i=1; i<=N;++i){
+        if(m[i] <= 0){
+            throw std::runtime_error("masa musi być większa niż 0");
+        }
+    }
     for(int i = 1; i <= N; ++i){
         particles.emplace_back(Particle(x[i], v[i], q[i], m[i]));
     }
-}
 
+}
+        
 Vec3 Config::parseVec3(const std::string& s){
     std::istringstream iss(s);
     double x,y,z;
@@ -72,9 +94,22 @@ int Config::getSteps() const{
     return steps;
 }
 
-std::string Config::getIntegrator() const{
-    return integrator;
+std::unique_ptr<Integrator> Config::getIntegrator() const{
+    if(integrator == "EulerIntegrator"){
+        return  std::make_unique<EulerIntegrator>();
+        
+    }
+    else if(integrator   == "RK4Integrator"){
+        return std::make_unique<RK4Integrator>();
+    }
+    throw std::runtime_error("nie ma takiego integratora odsyłam do --help");
 }
+std::shared_ptr<Field> Config::getField() const{
+    if(field == "UniformField"){
+        return std::make_shared<UniformField>(E,B);
+    }
+    throw std::runtime_error("nie ma takiego pola odsyłam do --help");
+}   
 
 Vec3 Config::getE() const{
     return E;
@@ -83,6 +118,7 @@ Vec3 Config::getE() const{
 Vec3 Config::getB() const{
     return B;
 }
+
 
 const std::vector<Particle>& Config::getParticles() const{
     return particles;

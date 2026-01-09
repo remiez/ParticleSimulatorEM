@@ -47,20 +47,8 @@ int main(int argc, char* argv[]){
     }
     try{
     Config config(configPath);
-    auto field = std::make_shared<UniformField>(config.getE(), config.getB());
-    std::shared_ptr<Integrator> integrator;
-    if(config.getIntegrator() == "EulerIntegrator"){
-        integrator = std::make_shared<EulerIntegrator>();
-        
-    }
-    else if(config.getIntegrator() == "RK4Integrator"){
-        integrator = std::make_shared<RK4Integrator>();
-    }
-    else{
-        std::cout<<"podano zly integrator \n";
-    }
     auto writer = std::make_unique<CSVWriter>("data/output.csv");
-    Simulation sim(std::move(writer), integrator, field, config.getDt());
+    Simulation sim(std::move(writer), config.getIntegrator(), config.getField(), config.getDt());
     for(const auto& p:config.getParticles()){
         sim.addParticle(p);
     }
